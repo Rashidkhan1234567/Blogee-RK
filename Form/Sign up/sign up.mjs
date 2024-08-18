@@ -1,79 +1,159 @@
-import { createUserWithEmailAndPassword, auth , db,addDoc, collection} from "./../../Firebase.js";
+import {
+  createUserWithEmailAndPassword,
+  auth,
+  db,
+  addDoc,
+  collection,
+} from "./../../Firebase.js";
 
-const name = document.getElementById("name");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
 const btn = document.getElementById("btn");
+const loader = document.querySelector(".loader");
 
+window.addEventListener("load", stopLoading);
 
-
-btn.addEventListener("click", async(e) => {
+btn.addEventListener("click", async (e) => {
   e.preventDefault();
-  btn.disabled = true
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email.value)) {
-    email.value = ""
+  btn.disabled = true;
+
+  if (nameInput.value.trim() === "") {
+    nameInput.value = "";
     Swal.fire({
       position: "top-end",
       icon: "error",
-      title: "Invalid Email Address!",
+      title: "Username reqiured!",
       showConfirmButton: false,
       timer: 1500,
     });
-  btn.disabled = false
+    btn.disabled = false;
     return;
-  } else if (name.value && email.value && password.value) {
+  } else if (nameInput.value.trim().length < 4) {
+    nameInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Please enter at least 4 characters for the username!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else if (!/^[a-zA-Z]+$/.test(nameInput.value)) {
+    nameInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Please enter only alphabet characters for the username!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else if (emailInput.value.trim() === "") {
+    emailInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Email reqiured!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+    emailInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Please enter a valid email address!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else if (passwordInput.value.trim() === "") {
+    passwordInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Password reqiured!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else if (passwordInput.value.includes(" ")) {
+    passwordInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Password should not contain spaces!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else if (passwordInput.value.trim().length < 6) {
+    passwordInput.value = "";
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: "Please enter at least 6 characters for the password!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    btn.disabled = false;
+    return;
+  } else {
     startLoading();
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-    .then(async(userCredential) => {
-        try {
-          const docRef = await addDoc(collection(db, email.value), {
-            userName : name.value,
-            userEmaiil : email.value 
-          });
-          console.log("Document written with ID: ", docRef.id);
-          stopLoading()
-        } catch (e) {
-          console.error("Error adding document: ", e);
-        }
-        stopLoading();
-        const user = userCredential.user;
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "User Created Successfully!",
-          showConfirmButton: false,
-          timer: 1500,
-        }).then((response) => {
-          name.value = "";
-          email.value = "";
-          password.value = "";
-          stopLoading();
-          // window.location.href = "../Sign In/sign in.html";
-          btn.disabled = false
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        btn.disabled = false
-
-        // ..
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        emailInput.value,
+        passwordInput.value
+      );
+      const user = userCredential.user;
+      const userData = {
+        userName: nameInput.value,
+        userEmail: emailInput.value,
+      };
+      await addDoc(collection(db, emailInput.value), userData);
+      console.log("User created successfully!");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "User Created Successfully!",
+        showConfirmButton: false,
+        timer: 1500,
       });
+      nameInput.value = "";
+      emailInput.value = "";
+      passwordInput.value = "";
+      stopLoading();
+      // window.location.href = "../Sign In/sign in.html";
+      btn.disabled = false;
+    } catch (error) {
+      console.error("Error creating user:", error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error creating user!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      btn.disabled = false;
+    }
   }
 });
 
-window.addEventListener("load", startLoading);
-
 function startLoading() {
-  let loader = document.querySelector(".loader");
-  loader.style.display = "none";
-  document.querySelector("section").style.filter = "blur(0px)";
+  loader.style.display = "block";
+  document.querySelector("section").style.filter = "blur(20px)";
 }
 
 function stopLoading() {
-  let loader = document.querySelector(".loader");
-  loader.style.display = "block";
-  document.querySelector("section").style.filter = "blur(20px)";
+  loader.style.display = "none";
+  document.querySelector("section").style.filter = "blur(0px)";
 }
