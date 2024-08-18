@@ -1,0 +1,197 @@
+@font-face {
+  font-family: custom;
+  src: url(../font/Passage.ttf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 98vw;
+  font-family: sans-serif;
+  position: relative;
+}
+
+.title {
+  font-family: custom;
+}
+
+section{
+  filter: blur(20px);
+}
+
+#addBlog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  color: #fff;
+  width: 500px;
+  height: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 27px;
+  margin-bottom: 40px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  border-bottom: 5px solid #000;
+}
+
+.error {
+  font-size: 60px;
+  text-align: center;
+  margin-top: 200px;
+  color: rgb(99, 99, 99);
+}
+
+.imgCont {
+  width: 100%;
+  padding: 0 80px;
+
+  label {
+    width: 180px;
+    height: 40px;
+    border-radius: 30px;
+    text-decoration: underline;
+    line-height: 20px;
+    font-size: 20px;
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+
+    input {
+      display: none;
+    }
+
+    img {
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    p {
+      cursor: pointer;
+    }
+  }
+}
+
+.blog{
+    display: none;
+}
+
+.addblogcontainer {
+  position: absolute;
+  padding: 20px 10px;
+  top: 10%;
+  left: 35%;
+  width: 400px;
+  min-height: 500px;
+  border-radius: 20px;
+  border: 3px solid #000;
+  background-color: rgba(128, 128, 128, 0.247);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  span {
+    font-size: 20px;
+    color: #fff;
+    margin-left: 10px;
+    letter-spacing: 1px;
+  }
+
+  input {
+    width: 300px;
+    padding: 0px 10px;
+    outline: none;
+    height: 40px;
+    border-radius: 10px;
+    border: 3px solid #000;
+  }
+
+  textarea {
+    width: 300px;
+    padding: 10px;
+    outline: none;
+    height: 150px;
+    border-radius: 10px;
+    border: 3px solid #000;
+    resize: none;
+
+    &::-webkit-scrollbar {
+      background-color: transparent;
+    }
+  }
+
+  .btn2 {
+    width: 100px;
+    height: 40px;
+    background-color: skyblue;
+    border-radius: 6px;
+    border: 2px solid #000;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    &:nth-child(2) {
+      margin-left: 10px;
+    }
+  }
+}
+
+
+.loader {
+  /* display: none; */
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  left: 45%;
+  --s: 64px;
+  width: var(--s);
+  aspect-ratio: 2;
+  --_g: #000 90%, #0000;
+  background: radial-gradient(farthest-side, var(--_g)) 0 50%/25% 50%,
+    radial-gradient(farthest-side at bottom, var(--_g)) 50%
+      calc(50% - var(--s) / 16) / 25% 25%,
+    radial-gradient(farthest-side at top, var(--_g)) 50%
+      calc(50% + var(--s) / 16) / 25% 25%,
+    radial-gradient(farthest-side at bottom, var(--_g)) 100%
+      calc(50% - var(--s) / 16) / 25% 25%,
+    radial-gradient(farthest-side at top, var(--_g)) 100%
+      calc(50% + var(--s) / 16) / 25% 25%;
+  background-repeat: no-repeat;
+  animation: l14 1s infinite;
+}
+@keyframes l14 {
+  25% {
+    background-position: 0 50%, 50% 0, 50% 100%, 100% 0, 100% 100%;
+  }
+  50% {
+    background-position: 100% 50%, 0 0, 0 100%, 50% 0, 50% 100%;
+  }
+  75%,
+  100% {
+    background-position: 100% 50%, 0 calc(50% - var(--s) / 16),
+      0 calc(50% + var(--s) / 16), 50% calc(50% - var(--s) / 16),
+      50% calc(50% + var(--s) / 16);
+  }
+}

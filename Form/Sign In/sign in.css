@@ -1,0 +1,150 @@
+@font-face {
+    font-family: custom;
+    src: url(../../font/Passage.ttf);
+  }
+  
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+form{
+    margin: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    width: 400px;
+    background: linear-gradient(13deg,rgb(255,255,255,0.140) , rgb(255,255,255,0.1));
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 3px solid #fff;
+    padding: 10px;
+    box-shadow: 0px 0px 20px #fff9;
+    color: #fff;
+
+    h1{
+        font-size: 45px;
+        margin-bottom: 20px;
+        font-family: sans-serif;
+    text-shadow: 0px 0px 0px #fff;
+    }
+}
+
+label{
+    position: relative;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+    input{
+        font-size: 18px;
+        padding: 0px 20px;
+        outline: none   ;
+        border: 2px solid #000;
+        width: 90%;
+        height:60px;
+        border-radius: 10px;
+    
+&:nth-child(1){
+    margin-top: 15px;
+}
+
+    }
+    
+}
+
+
+h1{
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 70px;
+    font-family: custom;
+    letter-spacing: 2px;
+    /* color: #fff; */
+    text-shadow: 0px 0px 10px #fff;
+}
+
+
+button{
+    width: 250px;
+    height: 40px;
+    background-color: rgb(0, 132, 255);
+    border: none;
+    border-radius: 30px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+
+    &:hover{
+        transform: scale(1.1);
+    }
+
+    &:active{
+        transform: scale(0.9);
+    }
+
+}
+
+p{
+text-shadow: 0px 0px 20px #000;
+}
+
+a{
+    color: rgb(62, 62, 236);
+}
+
+
+  
+.loader {
+    /* display: none; */
+    position: absolute;
+    z-index: 1000;
+    top: 50%;
+    left: 45%;
+    --s: 64px;
+    width: var(--s);
+    aspect-ratio: 2;
+    --_g: #000 90%, #0000;
+    background: radial-gradient(farthest-side, var(--_g)) 0 50%/25% 50%,
+      radial-gradient(farthest-side at bottom, var(--_g)) 50%
+        calc(50% - var(--s) / 16) / 25% 25%,
+      radial-gradient(farthest-side at top, var(--_g)) 50%
+        calc(50% + var(--s) / 16) / 25% 25%,
+      radial-gradient(farthest-side at bottom, var(--_g)) 100%
+        calc(50% - var(--s) / 16) / 25% 25%,
+      radial-gradient(farthest-side at top, var(--_g)) 100%
+        calc(50% + var(--s) / 16) / 25% 25%;
+    background-repeat: no-repeat;
+    animation: l14 1s infinite;
+  }
+  @keyframes l14 {
+    25% {
+      background-position: 0 50%, 50% 0, 50% 100%, 100% 0, 100% 100%;
+    }
+    50% {
+      background-position: 100% 50%, 0 0, 0 100%, 50% 0, 50% 100%;
+    }
+    75%,
+    100% {
+      background-position: 100% 50%, 0 calc(50% - var(--s) / 16),
+        0 calc(50% + var(--s) / 16), 50% calc(50% - var(--s) / 16),
+        50% calc(50% + var(--s) / 16);
+    }
+  }
+
+  section{
+    filter: blur(20px);
+    height: 100vh;
+    width: 100vw;
+    font-family: sans-serif;
+    display: grid;
+    place-content: center;
+    /* background-color: rgba(112, 128, 144, 0.404); */
+    background: linear-gradient(200deg, #0009,#000) , url(../../assets/laptop-screen-blog.jpg);
+  
+  }

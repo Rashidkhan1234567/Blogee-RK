@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="blog.css" />
+    <link
+      rel="shortcut icon"
+      href="../assets/small icon.png"
+      type="image/x-icon"
+      />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Blogee | Create Blog</title>
+</head>
+  <body>
+    <div class="loader"></div>
+    <header>
+        <nav
+          class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 "
+          >
+          <div
+          class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+          >
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+              <img src="../assets/small icon.png" class="h-8" alt="Blogee Logo" />
+              <span
+                class="title self-center text-3xl whitespace-nowrap dark:text-white"
+                >Blogee</span
+              >
+            </a>
+            <div
+            class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
+            >
+            <button
+            type="button"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 me-3"
+            id="sign in"
+              >
+                Sign in
+              </button>
+              <button
+                type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            id="sign up"
+
+              >
+              Sign up
+            </button>
+            <button
+            data-collapse-toggle="navbar-sticky"
+            type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="navbar-sticky"
+                aria-expanded="false"
+              >
+                <span class="sr-only">Open main menu</span>
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 17 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M1 1h15M1 7h15M1 13h15"
+                    />
+                </svg>
+            </button>
+        </div>
+        <div
+        class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+        id="navbar-sticky"
+        >
+        <ul
+        class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+        >
+        <li id="Home">
+            <a
+            href="../index.html"
+            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700
+            " 
+            >Home</a
+            >
+                </li>
+                <li id="Your_Blog">
+                    <a
+                    href="#"
+                    class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:p-0 md:dark:text-blue-500 md:text-blue-700"
+                    aria-current="page"
+                    >Your Blogs</a
+                    >
+                </li>
+                <li id="Profile">
+                  <a
+                    href="../Profile/profile.html"
+                    class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    >Profile</a
+                    >
+                </li>
+                <!-- <li>
+            <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+          </li> -->
+              </ul>
+            </div>
+        </div>
+        </nav>
+    </header>
+      <section class=" w-[98.7vw] min-h-[100%] pt-[120px] pb-[70px] bg-slate-300">
+       <div class="btn ">
+        <button type="button" id="addBlog">Add Blog <i class="fa-solid fa-plus ms-[10px]" style="color: #ffffff;"></i></button>
+       </div>
+        <div id="blogContainer">
+            <h1 class="error">Empty</h1>
+        </div>
+    </section>
+        <div class="blog">
+            <div class="addblogcontainer">
+                <label for="Goal">
+                <span>Goal: </span><br>
+                <input type="text" id="goal" required />
+            </label>
+            <label for="title">
+                <span>Title:</span> <br>
+                <input type="text" id="title" required />
+            </label>
+            <label for="Description">
+                <span>Discription:</span> <br>
+                <textarea id="Description"></textarea>
+            </label>
+            <div class="imgCont">
+                <label>
+                  <input type="file" id="FileInput" />
+                  <p id="uploadImgBtn" title="Upload Image">
+                    Upload Image
+                  </p>
+                  <img
+                    src="../assets/laptop-screen-blog.jpg"
+                    title="Change Image"
+                    width="500"
+                    alt="Preview"
+                    id="previewImg"
+                    style="display: none"
+                  />
+                </label>
+              </div>
+              <div class="buttons">
+                <button type="button" class="btn2" id="cancelBtn">Cancel</button>
+                <button type="submit" class="btn2" id="submitBtn">Create</button>
+            </div>
+        </div>
+    </div>
+      <footer class="bg-gray-900 text-white p-4 w-[98.7vw]">
+          <div class="flex justify-between">
+            <div>
+              <!-- Footer content for the left side -->
+              <p>Copyright © 2024 Blogee. All rights reserved.</p>
+            </div>
+            <div>
+              <!-- Footer content for the right side -->
+              <ul class="flex space-x-4">
+                <li><a href="#" class="text-white hover:text-blue-500">Terms</a></li>
+                <li><a href="#" class="text-white hover:text-blue-500">Privacy</a></li>
+                <li><a href="#" class="text-white hover:text-blue-500">Help</a></li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+  
+    <script type="module" src="blog.mjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+  </body>
+</html>

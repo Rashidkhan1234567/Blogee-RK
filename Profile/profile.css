@@ -1,0 +1,173 @@
+body {
+    background: #fff;
+    --main-color: #7480ff;
+  }
+  
+  .co {
+    width: 100%;
+    min-height: 89.6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+  }
+  
+  .profile {
+    min-width: 250px;
+    width: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--main-color);
+    padding: 50px;
+    border-radius: 8px;
+    gap: 10px;
+  }
+  
+  .profile .picture {
+    position: relative;
+    border-radius: 50%;
+    /* overflow: hidden; */
+    width: 150px;
+    height: 150px;
+    border: 5px solid var(--main-color);
+  }
+  
+  #fileInput {
+    display: none;
+  }
+  
+  .profile .picture label img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .profile .picture label::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    background: url(../img/camera_black.png);
+    background-color: #ffffffa2;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    border-radius: 50%;
+    border: 3px solid var(--main-color);
+    cursor: pointer;
+  }
+  
+  .inputContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #4d4d4d23;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    clip-path: circle(0% at 50% 50%);
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+  
+    &.active {
+      transform: scale(1);
+      clip-path: circle(100% at 50% 50%);
+      pointer-events: all;
+      opacity: 1;
+    }
+  
+    .btns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 260px;
+  
+      button .bx {
+        font-size: 1.7rem;
+      }
+    }
+  }
+  
+  .profile .name {
+    display: flex;
+  
+    .bx-edit-alt {
+      color: #7480ff;
+      margin: 3px;
+      cursor: pointer;
+    }
+  }
+
+
+  
+.loader {
+    /* display: none; */
+    position: absolute;
+    z-index: 1000;
+    top: 50%;
+    left: 45%;
+    --s: 64px;
+    width: var(--s);
+    aspect-ratio: 2;
+    --_g: #000 90%, #0000;
+    background: radial-gradient(farthest-side, var(--_g)) 0 50%/25% 50%,
+      radial-gradient(farthest-side at bottom, var(--_g)) 50%
+        calc(50% - var(--s) / 16) / 25% 25%,
+      radial-gradient(farthest-side at top, var(--_g)) 50%
+        calc(50% + var(--s) / 16) / 25% 25%,
+      radial-gradient(farthest-side at bottom, var(--_g)) 100%
+        calc(50% - var(--s) / 16) / 25% 25%,
+      radial-gradient(farthest-side at top, var(--_g)) 100%
+        calc(50% + var(--s) / 16) / 25% 25%;
+    background-repeat: no-repeat;
+    animation: l14 1s infinite;
+  }
+  @keyframes l14 {
+    25% {
+      background-position: 0 50%, 50% 0, 50% 100%, 100% 0, 100% 100%;
+    }
+    50% {
+      background-position: 100% 50%, 0 0, 0 100%, 50% 0, 50% 100%;
+    }
+    75%,
+    100% {
+      background-position: 100% 50%, 0 calc(50% - var(--s) / 16),
+        0 calc(50% + var(--s) / 16), 50% calc(50% - var(--s) / 16),
+        50% calc(50% + var(--s) / 16);
+    }
+  }
+
+  section{
+    filter: blur(20px);
+  }
+
+  
+.imgCont {
+
+  input{
+    display: none;
+  }
+
+  img{
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+  }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sign up.css" />
+    <link
+      rel="shortcut icon"
+      href="../../assets/small icon.png"
+      type="image/x-icon"
+    />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <title>Blogee | Sign up</title>
+  </head>
+  <body>
+    <div class="loader"></div>
+    <section>
+
+      <h1>Blogee</h1>
+      <form method="get">
+        <h1>Sign Up</h1>
+        <label for="name">
+            <input type="text" placeholder="Name " id="name" required autocomplete="off" autofocus aria-keyshortcuts="Enter">
+        </label>
+        <label for="email">
+            <input type="text" placeholder="Email " id="email" required autocomplete="off" autofocus aria-keyshortcuts="Enter">
+        </label>
+        <label for="password">
+            <input type="password" placeholder="Password" id="password" required autocomplete="off">
+        </label>
+        <button type="submit" id="btn">Sign up</button>
+        <p>already have an account ? <a href="../Sign In/sign in.html">Sign in</a></p>
+      </form>
+    </section>
+    <!-- <script type="module" src="sign up.mjs"></script> -->
+     <script type="module" src="sign up.mjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
