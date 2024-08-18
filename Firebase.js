@@ -10,7 +10,17 @@ import {
   collection,
   addDoc,
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-import { firebaseConfig } from "./firebaseConfig";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDLOn0kN-rfSrrPOZXe0I_scgOQUoKQWi8",
+  authDomain: "blog-ab2e3.firebaseapp.com",
+  projectId: "blog-ab2e3",
+  storageBucket: "blog-ab2e3.appspot.com",
+  messagingSenderId: "238254513228",
+  appId: "1:238254513228:web:483e1c4b7c7a619433a8e9",
+  measurementId: "G-FN5V43YVD2"
+};
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
