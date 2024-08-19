@@ -144,8 +144,10 @@ btn.addEventListener("click", async (e) => {
             title: "Email is invalid!",
             showConfirmButton: false,
             timer: 1500,
+          }).then(() => {
+            stopLoading();
+            btn.disabled = false;
           });
-          btn.disabled = false;
           break;
 
         case "auth/invalid-password":
@@ -156,8 +158,10 @@ btn.addEventListener("click", async (e) => {
             title: "Password is invalid!",
             showConfirmButton: false,
             timer: 1500,
+          }).then(() => {
+            stopLoading();
+            btn.disabled = false;
           });
-          btn.disabled = false;
           break;
 
         case "auth/email-already-in-use":
@@ -168,17 +172,19 @@ btn.addEventListener("click", async (e) => {
             title: "Email already in use!",
             showConfirmButton: false,
             timer: 1500,
+          }).then(() => {
+            stopLoading();
+            btn.disabled = false;
           });
-          btn.disabled = false;
           break;
 
         default:
           break;
       }
-      stopLoading();
     }
   }
 });
+
 
 function startLoading() {
   loader.style.display = "block";
