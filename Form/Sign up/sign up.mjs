@@ -147,8 +147,8 @@ btn.addEventListener("click", async (e) => {
           });
           btn.disabled = false;
           break;
-          
-          case "auth/invalid-password":
+
+        case "auth/invalid-password":
           passwordInput.value = "";
           Swal.fire({
             position: "top-end",
@@ -159,8 +159,8 @@ btn.addEventListener("click", async (e) => {
           });
           btn.disabled = false;
           break;
-          
-          case "auth/email-already-in-use":
+
+        case "auth/email-already-in-use":
           passwordInput.value = "";
           Swal.fire({
             position: "top-end",
@@ -174,7 +174,9 @@ btn.addEventListener("click", async (e) => {
 
         default:
           break;
-      }    }
+      }
+      stopLoading();
+    }
   }
 });
 
