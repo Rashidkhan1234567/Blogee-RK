@@ -1,146 +1,205 @@
+import {
+  auth,
+  onAuthStateChanged,
+  signOut,
+  getDocs,
+  collection,
+  db,
+} from ".././Firebase.js";
 
-// import {
-//     load,
-//     logout,
-//     storage,
-//     auth,
-//     updateProfile,
-//   } from "../firebaseConfig.js";
-  
-//   import {
-//       ref,
-//       uploadBytesResumable,
-//       getDownloadURL,
-//     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-    
-    window.addEventListener("load", () => {
-      let loader = document.querySelector(".loader")
-      loader.style.display = "none";
-      document.querySelector("section").style.filter = "blur(0px)";
-    });
-  
-  const profileLogout = document.querySelector(".profile .btn");
-  const logoutBtn = document.getElementById("logout");
-  
-  const profileImg = document.getElementById("profileImg");
-  const img = document.getElementById("img");
-  const username = document.getElementById("username");
-  const useremail = document.getElementById("useremail");
-  const fileInput = document.getElementById("fileInput");
-  const usernameEdit = document.getElementById("usernameEdit");
-  const loadCon = document.getElementById("loadForm");
-  const inputContainer = document.getElementById("inputContainer");
-  const newUsername = document.getElementById("newUsername");
-  const cancelBtn = document.getElementById("cancelBtn");
-  const saveBtn = document.getElementById("saveBtn");
-  const alertCheckbox = document.querySelector(".alertCheckbox");
-  const alertMess = document.getElementById("alertMess");
-  
-  
-  
-  fileInput.addEventListener("change", ({ target }) => {
-    loadCon.classList.remove("noneForm");
-    let imgIsOk;
-    let url;
-    let fileData = target.files[0];
-  
-    if (fileData.type.startsWith("image/")) {
-      url = URL.createObjectURL(fileData);
-      imgIsOk = true;
-      img.setAttribute("src", url);
-      profileImg.setAttribute("src", url);
+const profileLogout = document.querySelector(".profile .btn");
+const logoutBtn = document.getElementById("logout");
+
+const profileImg = document.getElementById("profileImg");
+const img = document.getElementById("img");
+const username = document.getElementById("username");
+const useremail = document.getElementById("useremail");
+const fileInput = document.getElementById("fileInput");
+const usernameEdit = document.getElementById("usernameEdit");
+const loadCon = document.getElementById("loadForm");
+const inputContainer = document.getElementById("inputContainer");
+const newUsername = document.getElementById("newUsername");
+const cancelBtn = document.getElementById("cancelBtn");
+const saveBtn = document.getElementById("saveBtn");
+const alertCheckbox = document.querySelector(".alertCheckbox");
+const alertMess = document.getElementById("alertMess");
+const Your_Blog = document.getElementById("Your_Blog");
+const loader = document.querySelector(".loader");
+const Logout = document.getElementById("Logout");
+const btnsContanier = document.getElementById("btnsContanier");
+let getEmail;
+let userDetails;
+
+username.innerHTML = "Guest";
+useremail.innerHTML = "guest@gmail.com";
+
+window.addEventListener("load", () => {
+  stopLoading();
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const uid = user.uid;
+      getEmail = user.email;
+
+      const querySnapshot = await getDocs(collection(db, getEmail));
+      querySnapshot.forEach((doc) => {
+        userDetails = doc.data();
+      });
+      console.log(userDetails);
+
+      if (userDetails != undefined && userDetails != null) {
+        let firstLetter = userDetails.userName.slice(0, 1).toUpperCase();
+        let otherLetter = userDetails.userName.slice(1).toLowerCase();
+        let fullName = firstLetter + otherLetter;
+        username.innerHTML = fullName;
+        useremail.innerHTML = userDetails.userEmail;
+      }
+
+      btnsContanier.innerHTML = `
+       <button
+         type="button"
+         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 me-3"
+         id="Logout"
+         >
+         Logout
+       </button>
+      `;
     } else {
-      loadCon.classList.add("noneForm");
-      alertMess.innerHTML = "File format not supported!";
-      alertCheckbox.click();
-      imgIsOk = false;
+      btnsContanier.innerHTML = `
+       <button
+        type="button"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 me-3"
+        id="sign in"
+        >
+        Sign in
+      </button>
+      <button
+        type="button"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        id="sign up"     
+        >
+        Sign up
+     </button>
+      `;
+      document.getElementById("logout2").innerHTML = "Sign in";
+      const sign_in = document.getElementById("sign in");
+      const sign_up = document.getElementById("sign up");
+      sign_in.addEventListener("click", () => {
+        window.location.href = "Form/Sign in/sign in.html";
+      });
+
+      sign_up.addEventListener("click", () => {
+        window.location.href = "Form/Sign up/sign up.html";
+      });
     }
-  
-    const metadata = {
-      name: fileData.name,
-      size: fileData.size,
-      type: fileData.type,
-    };
-  
-    if (imgIsOk) {
-      const fileName = auth.currentUser.uid;
-  
-      const storageRef = ref(storage, "userProfle/" + fileName);
-  
-      const uploadTask = uploadBytesResumable(storageRef, fileData, metadata);
-  
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        },
-        (error) => {
-          console.error(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((imageURL) => {
-            updateProfile(auth.currentUser, {
-              photoURL: imageURL,
+  });
+});
+
+function startLoading() {
+  loader.style.display = "block";
+  document.querySelector("section").style.filter = "blur(20px)";
+}
+
+function stopLoading() {
+  loader.style.display = "none";
+  document.querySelector("section").style.filter = "blur(0px)";
+}
+
+Your_Blog.addEventListener("click", () => {
+  window.location.href = "Blogs/blog.html";
+});
+
+fileInput.addEventListener("change", ({ target }) => {
+  loadCon.classList.remove("noneForm");
+  let imgIsOk;
+  let url;
+  let fileData = target.files[0];
+
+  if (fileData.type.startsWith("image/")) {
+    url = URL.createObjectURL(fileData);
+    imgIsOk = true;
+    img.setAttribute("src", url);
+    profileImg.setAttribute("src", url);
+  } else {
+    loadCon.classList.add("noneForm");
+    alertMess.innerHTML = "File format not supported!";
+    alertCheckbox.click();
+    imgIsOk = false;
+  }
+
+  const metadata = {
+    name: fileData.name,
+    size: fileData.size,
+    type: fileData.type,
+  };
+
+  if (imgIsOk) {
+    const fileName = auth.currentUser.uid;
+
+    const storageRef = ref(storage, "userProfle/" + fileName);
+
+    const uploadTask = uploadBytesResumable(storageRef, fileData, metadata);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((imageURL) => {
+          updateProfile(auth.currentUser, {
+            photoURL: imageURL,
+          })
+            .then(() => {
+              loadCon.classList.add("noneForm");
             })
-              .then(() => {
-                loadCon.classList.add("noneForm");
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-          });
-        }
-      );
-    }
-  });
-  
-  usernameEdit.addEventListener("click", () => {
-    inputContainer.classList.add("active");
-  });
-  
-  cancelBtn.addEventListener("click", () => {
-    inputContainer.classList.remove("active");
-    setTimeout(() => {
-      newUsername.value = "";
-    }, 500);
-  });
-  
-  saveBtn.addEventListener("click", () => {
-    if (newUsername.value.trim() === "") {
-      alertMess.innerHTML = "Username Reqiured!";
-      alertCheckbox.click();
-    } else if (newUsername.value.trim().length < 4) {
-      alertMess.innerHTML =
-        "Please enter at least 4 characters for the username!";
-      alertCheckbox.click();
-    } else if (!/^[a-zA-Z]+$/.test(newUsername.value)) {
-      alertMess.innerHTML =
-        "Please enter only alphabet characters for the username!";
-      alertCheckbox.click();
-    } else {
-      loadCon.classList.remove("noneForm");
-      updateProfile(auth.currentUser, {
-        displayName: newUsername.value,
-      })
-        .then(() => {
-          loadCon.classList.add("noneForm");
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.error(error);
+            .catch((error) => {
+              console.error(error);
+            });
         });
-    }
-  });
+      }
+    );
+  }
+});
 
-  
-  const sign_in = document.getElementById('sign in')
-  const sign_up = document.getElementById('sign up')
+usernameEdit.addEventListener("click", () => {
+  inputContainer.classList.add("active");
+});
 
-  sign_in.addEventListener("click", ()=>{
-    window.location.href = "Form/Sign in/sign in.html"
-  })
+cancelBtn.addEventListener("click", () => {
+  inputContainer.classList.remove("active");
+  setTimeout(() => {
+    newUsername.value = "";
+  }, 500);
+});
 
-  sign_up.addEventListener("click", ()=>{
-    window.location.href = "Form/Sign up/sign up.html"
-  })
+saveBtn.addEventListener("click", () => {
+  if (newUsername.value.trim() === "") {
+    alertMess.innerHTML = "Username Reqiured!";
+    alertCheckbox.click();
+  } else if (newUsername.value.trim().length < 4) {
+    alertMess.innerHTML =
+      "Please enter at least 4 characters for the username!";
+    alertCheckbox.click();
+  } else if (!/^[a-zA-Z]+$/.test(newUsername.value)) {
+    alertMess.innerHTML =
+      "Please enter only alphabet characters for the username!";
+    alertCheckbox.click();
+  } else {
+    loadCon.classList.remove("noneForm");
+    updateProfile(auth.currentUser, {
+      displayName: newUsername.value,
+    })
+      .then(() => {
+        loadCon.classList.add("noneForm");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+});

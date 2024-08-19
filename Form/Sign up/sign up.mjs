@@ -132,19 +132,49 @@ btn.addEventListener("click", async (e) => {
       emailInput.value = "";
       passwordInput.value = "";
       stopLoading();
-      // window.location.href = "../Sign In/sign in.html";
+      window.location.href = "../Sign In/sign in.html";
       btn.disabled = false;
     } catch (error) {
-      console.error("Error creating user:", error);
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Error creating user!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      btn.disabled = false;
-    }
+      switch (error.code) {
+        case "auth/invalid-email":
+          emailInput.value = "";
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Email is invalid!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          btn.disabled = false;
+          break;
+          
+          case "auth/invalid-password":
+          passwordInput.value = "";
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Password is invalid!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          btn.disabled = false;
+          break;
+          
+          case "auth/email-already-in-use":
+          passwordInput.value = "";
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Email already in use!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          btn.disabled = false;
+          break;
+
+        default:
+          break;
+      }    }
   }
 });
 
