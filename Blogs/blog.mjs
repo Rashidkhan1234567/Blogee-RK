@@ -107,7 +107,9 @@ window.addEventListener("load", async () => {
 
       submitBtn.addEventListener("click", async (e) => {
         e.preventDefault;
-
+        submitBtn.disabled = true;
+        startLoading()
+        document.querySelector(".blog").style.filter = "blur(20px)";
         let cardData = {
           imgurl: url,
           goal: goal.value,
@@ -118,19 +120,21 @@ window.addEventListener("load", async () => {
         await addDoc(collection(db, getEmail), cardData);
         await addDoc(collection(db, "PublicCard"), cardData);
         window.location.reload();
-        blogContainer.innerHTML += `
-        // <img src="${url}">
-        `;
+        // blogContainer.innerHTML += `<img src="${url}">`;
         goal.value = "";
         title.value = "";
         Description.value = "";
         previewImg.style.display = "none";
         uploadImgBtn.style.display = "";
         url = "";
+        document.querySelector("body").style.overflow = "auto"
         document.querySelector(".blog").style.display = "none";
         // document.querySelector("header").style.filter = "blur(20px)"
         document.querySelector("section").style.filter = "blur(0px)";
         document.querySelector("footer").style.filter = "blur(0px)";
+        stopLoading()
+        submitBtn.disabled = false;
+
       });
 
       addBlog.addEventListener("click", addBlogWithLogin);
@@ -211,6 +215,7 @@ window.addEventListener("load", async () => {
 });
 
 function addBlogWithLogin() {
+  document.querySelector("body").style.overflow = "hidden"
   document.querySelector(".blog").style.display = "block";
   // document.querySelector("header").style.filter = "blur(20px)"
   document.querySelector("section").style.filter = "blur(20px)";
@@ -229,11 +234,16 @@ function addBlogWithoutLogin() {
 
 function startLoading() {
   loader.style.display = "block";
+  // document.querySelector("header").style.filter = "blur(20px)";
   document.querySelector("section").style.filter = "blur(20px)";
+  document.querySelector("footer").style.filter = "blur(20px)";
 }
 
 function stopLoading() {
   let error = document.querySelector(".error");
   loader.style.display = "none";
+  // document.querySelector("header").style.filter = "blur(0px)";
   document.querySelector("section").style.filter = "blur(0px)";
+  document.querySelector("footer").style.filter = "blur(0px)";
 }
+

@@ -62,3 +62,13 @@ section{
       50% calc(50% + var(--s) / 16);
   }
 }
+
+.blogCards{
+background-color: red !important;
+line-break: strict;
+max-width: 700px;
+}
+
+.des{
+  line-break: strict;
+}
