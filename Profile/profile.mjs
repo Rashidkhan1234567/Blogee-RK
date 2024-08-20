@@ -49,16 +49,53 @@ window.addEventListener("load", () => {
         username.innerHTML = fullName;
         useremail.innerHTML = userDetails.userEmail;
       }
-
+      
       btnsContanier.innerHTML = `
        <button
          type="button"
          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 me-3"
-         id="Logout"
+         id="Logout1"
          >
          Logout
        </button>
       `;
+      
+      async function logout() {
+        let Logout = document.getElementById("Logout");
+        let logout1  = document.getElementById("Logout1")
+        Logout.addEventListener("click", logout);
+        logout1.addEventListener("click",logout)
+        function logout(e) {
+          e.preventDefault();
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You want to logout?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Logout!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              signOut(auth)
+                .then(() => {
+                  Swal.fire({
+                    title: "Logged Out",
+                    text: "You have successfully logged out!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                  });
+                  window.location.reload();
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          });
+        }
+      }
+      logout();
+
     } else {
       btnsContanier.innerHTML = `
        <button
@@ -76,15 +113,16 @@ window.addEventListener("load", () => {
         Sign up
      </button>
       `;
-      document.getElementById("logout2").innerHTML = "Sign in";
+      document.getElementById("Logout").innerHTML = "Sign in";
       const sign_in = document.getElementById("sign in");
       const sign_up = document.getElementById("sign up");
+
       sign_in.addEventListener("click", () => {
-        window.location.href = "Form/Sign in/sign in.html";
+        window.location.href = "../Form/Sign in/sign in.html";
       });
 
       sign_up.addEventListener("click", () => {
-        window.location.href = "Form/Sign up/sign up.html";
+        window.location.href = "../Form/Sign up/sign up.html";
       });
     }
   });
@@ -109,7 +147,7 @@ const fileInput = document.getElementById("fileInput");
 
 fileInput.addEventListener("change", ({ target }) => {
   console.log(target);
-  
+
   // loadCon.classList.remove("noneForm");
   let imgIsOk;
   let url;
@@ -118,10 +156,10 @@ fileInput.addEventListener("change", ({ target }) => {
   if (fileData.type.startsWith("image/")) {
     url = URL.createObjectURL(fileData);
     imgIsOk = true;
-    img.setAttribute("src", url);
-    
+    localStorage.setItem("url", url);
+    img.setAttribute("src", localStorage.getItem("url"));
   } else {
-    alert("error")
+    alert("error");
     imgIsOk = false;
   }
 });

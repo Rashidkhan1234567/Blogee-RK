@@ -2,7 +2,6 @@
 
 const Your_Blog = document.getElementById("Your_Blog");
 const loader = document.querySelector(".loader");
-const Logout = document.getElementById("Logout");
 const btnsContanier = document.getElementById("btnsContanier");
 let getEmail;
 let obj = []
@@ -63,6 +62,39 @@ window.addEventListener("load", () => {
          Logout
        </button>
       `;
+      async function logout() {
+        let Logout = document.getElementById("Logout");
+        Logout.addEventListener("click", logout);
+         function logout(e) {
+           e.preventDefault();
+           Swal.fire({
+             title: "Are you sure?",
+             text: "You want to logout?",
+             icon: "question",
+             showCancelButton: true,
+             confirmButtonColor: "#3085d6",
+             cancelButtonColor: "#d33",
+             confirmButtonText: "Yes, Logout!",
+           }).then((result) => {
+             if (result.isConfirmed) {
+               signOut(auth)
+                 .then(() => {
+                   Swal.fire({
+                     title: "Logged Out",
+                     text: "You have successfully logged out!",
+                     icon: "success",
+                     confirmButtonText: "OK",
+                   });
+                   window.location.reload();
+                 })
+                 .catch((error) => {
+                   console.log(error);
+                 });
+             }
+           });
+         }
+       }
+       logout();
     } else {
       btnsContanier.innerHTML = `
        <button

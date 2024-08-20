@@ -5,6 +5,7 @@ import {
   getDocs,
   addDoc,
   collection,
+  signOut,
 } from "../Firebase.js";
 
 const FileInput = document.getElementById("FileInput");
@@ -12,29 +13,6 @@ const previewImg = document.getElementById("previewImg");
 const uploadImgBtn = document.getElementById("uploadImgBtn");
 const btnsContanier = document.getElementById("btnsContanier");
 const addBlog = document.getElementById("addBlog");
-let url;
-let fileData;
-let imgIsOk = false;
-let getEmail;
-
-FileInput.addEventListener("change", ({ target }) => {
-  fileData = target.files[0];
-
-  if (fileData.type.startsWith("image/")) {
-    url = URL.createObjectURL(fileData);
-    imgIsOk = true;
-    previewImg.setAttribute("src", url);
-    previewImg.style.display = "";
-    uploadImgBtn.style.display = "none";
-  } else {
-    Swal.fire({
-      title: "File Format Not Supported!",
-      icon: "error",
-    });
-    imgIsOk = false;
-  }
-});
-
 const goal = document.getElementById("goal");
 const title = document.getElementById("title");
 const Description = document.getElementById("Description");
@@ -50,9 +28,32 @@ cancelBtn.addEventListener("click", () => {
   document.querySelector("section").style.filter = "blur(0px)";
   document.querySelector("footer").style.filter = "blur(0px)";
 });
-let obj = []
+let obj = [];
 window.addEventListener("load", async () => {
   stopLoading();
+
+  let url;
+  let fileData;
+  let imgIsOk = false;
+  let getEmail;
+
+  FileInput.addEventListener("change", ({ target }) => {
+    fileData = target.files[0];
+
+    if (fileData.type.startsWith("image/")) {
+      url = URL.createObjectURL(fileData);
+      imgIsOk = true;
+      previewImg.setAttribute("src", url);
+      previewImg.style.display = "";
+      uploadImgBtn.style.display = "none";
+    } else {
+      Swal.fire({
+        title: "File Format Not Supported!",
+        icon: "error",
+      });
+      imgIsOk = false;
+    }
+  });
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -68,9 +69,9 @@ window.addEventListener("load", async () => {
         const querySnapshot = await getDocs(collection(db, getEmail));
         const cardDetails = querySnapshot.docs.map((doc) => doc.data());
         cardDetails.forEach((element) => {
-        obj.push(element)
+          obj.push(element);
         });
-        obj.pop()
+        obj.pop();
         for (const element of obj) {
           blogContainer.innerHTML += `
           <div class="blogCards relative flex bg-clip-border rounded-xl bg-white text-gray-700 shadow-md w-full max-w-[45rem] flex-row">
@@ -102,8 +103,6 @@ window.addEventListener("load", async () => {
                             </div>  
                             `;
         }
-        
-        
       }
 
       submitBtn.addEventListener("click", async (e) => {
@@ -120,8 +119,8 @@ window.addEventListener("load", async () => {
         await addDoc(collection(db, "PublicCard"), cardData);
         window.location.reload();
         blogContainer.innerHTML += `
-        <img src="${url}">
-        `
+        // <img src="${url}">
+        `;
         goal.value = "";
         title.value = "";
         Description.value = "";
@@ -145,6 +144,39 @@ window.addEventListener("load", async () => {
          Logout
        </button>
       `;
+      async function logout() {
+       let Logout = document.getElementById("Logout");
+       Logout.addEventListener("click", logout);
+        function logout(e) {
+          e.preventDefault();
+          Swal.fire({
+            title: "Are you sure?",
+            text: "You want to logout?",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Logout!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              signOut(auth)
+                .then(() => {
+                  Swal.fire({
+                    title: "Logged Out",
+                    text: "You have successfully logged out!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                  });
+                  window.location.reload();
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+            }
+          });
+        }
+      }
+      logout();
     } else {
       addBlog.addEventListener("click", addBlogWithoutLogin);
 
