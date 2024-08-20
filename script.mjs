@@ -122,7 +122,7 @@ onAuthStateChanged(auth, async (user) => {
     const sign_up = document.getElementById("sign up");
 
     sign_in.addEventListener("click", () => {
-      window.location.href = "Form/Sign in/sign in.html";
+      window.location.href = "Form/Sign In/sign in.html";
     });
 
     sign_up.addEventListener("click", () => {
