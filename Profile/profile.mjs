@@ -10,11 +10,8 @@ import {
 const profileLogout = document.querySelector(".profile .btn");
 const logoutBtn = document.getElementById("logout");
 
-const profileImg = document.getElementById("profileImg");
-const img = document.getElementById("img");
 const username = document.getElementById("username");
 const useremail = document.getElementById("useremail");
-const fileInput = document.getElementById("fileInput");
 const usernameEdit = document.getElementById("usernameEdit");
 const loadCon = document.getElementById("loadForm");
 const inputContainer = document.getElementById("inputContainer");
@@ -32,7 +29,6 @@ let userDetails;
 
 username.innerHTML = "Guest";
 useremail.innerHTML = "guest@gmail.com";
-
 window.addEventListener("load", () => {
   stopLoading();
 
@@ -40,7 +36,6 @@ window.addEventListener("load", () => {
     if (user) {
       const uid = user.uid;
       getEmail = user.email;
-
       const querySnapshot = await getDocs(collection(db, getEmail));
       querySnapshot.forEach((doc) => {
         userDetails = doc.data();
@@ -109,8 +104,13 @@ Your_Blog.addEventListener("click", () => {
   window.location.href = "Blogs/blog.html";
 });
 
+const img = document.getElementById("img");
+const fileInput = document.getElementById("fileInput");
+
 fileInput.addEventListener("change", ({ target }) => {
-  loadCon.classList.remove("noneForm");
+  console.log(target);
+  
+  // loadCon.classList.remove("noneForm");
   let imgIsOk;
   let url;
   let fileData = target.files[0];
@@ -119,50 +119,10 @@ fileInput.addEventListener("change", ({ target }) => {
     url = URL.createObjectURL(fileData);
     imgIsOk = true;
     img.setAttribute("src", url);
-    profileImg.setAttribute("src", url);
+    
   } else {
-    loadCon.classList.add("noneForm");
-    alertMess.innerHTML = "File format not supported!";
-    alertCheckbox.click();
+    alert("error")
     imgIsOk = false;
-  }
-
-  const metadata = {
-    name: fileData.name,
-    size: fileData.size,
-    type: fileData.type,
-  };
-
-  if (imgIsOk) {
-    const fileName = auth.currentUser.uid;
-
-    const storageRef = ref(storage, "userProfle/" + fileName);
-
-    const uploadTask = uploadBytesResumable(storageRef, fileData, metadata);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((imageURL) => {
-          updateProfile(auth.currentUser, {
-            photoURL: imageURL,
-          })
-            .then(() => {
-              loadCon.classList.add("noneForm");
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        });
-      }
-    );
   }
 });
 

@@ -165,7 +165,7 @@ btn.addEventListener("click", async (e) => {
           break;
 
         case "auth/email-already-in-use":
-          passwordInput.value = "";
+          emailInput.value = "";
           Swal.fire({
             position: "top-end",
             icon: "error",

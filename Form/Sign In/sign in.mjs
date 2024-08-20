@@ -85,6 +85,8 @@ signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
     return;
   })
   .catch((error) => {
+    emailInput.value = "";
+    passwordInput.value = "";
 
     btn.disabled = false;
     Swal.fire({
